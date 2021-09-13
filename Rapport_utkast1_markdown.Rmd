@@ -1,0 +1,31 @@
+---
+title: "Rapport_1_ex"
+author: "Pernille Breili"
+date: "9/10/2021"
+output: html_document
+---
+
+library(tidyverse) # for data wrangling
+library(knitr) # for table creation
+library(kableExtra) # for extra styling of the table
+library(readr) # for data reading
+keisertest <- read.csv("~/IDR4000x/keisertest.csv", header=TRUE, sep=";") # read data file "keisertest"
+View(keisertest) # open the data file
+glimpse(keisertest) # view the data file in console
+
+keisertest %>% # take the data set keisertest
+  group_by(sex) %>% # group by sex
+  mutate(n = n()) %>% # count n per group
+  pivot_longer(names_to = "variable", 
+               values_to = "value", 
+               cols = fmax_R:n) %>%
+  group_by(sex, variable) %>%
+  summarise(m = mean(value), 
+            s = sd(value)) %>%
+  print() # print the output
+  
+
+  
+
+
+
